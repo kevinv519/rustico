@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 @Table(schema = "public", name = "empleado")
 public class Employee {
 
-	@NotBlank
 	@Id
 	@GeneratedValue(generator = "emp_code_gen", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "emp_code_gen", sequenceName = "public.empleado_codigo_seq", allocationSize = 1)

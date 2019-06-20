@@ -20,7 +20,6 @@ import javax.validation.constraints.Size;
 @Table(schema = "public", name = "sucursal")
 public class Store {
 	
-	@NotBlank
 	@Id
 	@GeneratedValue(generator = "store_code_gen", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "store_code_gen", sequenceName = "public.sucursal_codigo_seq", allocationSize = 1)
