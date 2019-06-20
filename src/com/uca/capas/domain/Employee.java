@@ -10,34 +10,46 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(schema = "public", name = "empleado")
 public class Employee {
 
+	@NotBlank
 	@Id
 	@GeneratedValue(generator = "emp_code_gen", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "emp_code_gen", sequenceName = "public.empleado_codigo_seq", allocationSize = 1)
 	@Column(name = "codigo")
 	private Integer code;
 	
+	@NotBlank(message = "Nombre del empleado obligatorio")
+	@Size(min = 3, max = 200)
 	@Column(name = "nombre")
 	private String name;
 	
+	@NotNull
 	@Column(name = "edad")
 	private Integer age;
 	
+	@NotBlank(message = "Debe especificar el sexo del empleado")
+	@Pattern(regexp = "^[M|F]{1}$", message = "Debe ser M o F")
 	@Column(name = "sexo")
-	private char gender;
+	private String gender;
 	
+	@NotNull
 	@Column(name = "estado")
 	private boolean status;
 	
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sucursal_id")
 	private Store store;
 
-	public Employee(Integer code, String name, Integer age, char gender, boolean status, Store store) {
+	public Employee(Integer code, String name, Integer age, String gender, boolean status, Store store) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -71,11 +83,11 @@ public class Employee {
 		this.age = age;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

@@ -11,29 +11,42 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(schema = "public", name = "sucursal")
 public class Store {
 	
+	@NotBlank
 	@Id
 	@GeneratedValue(generator = "store_code_gen", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "store_code_gen", sequenceName = "public.sucursal_codigo_seq", allocationSize = 1)
 	@Column(name = "codigo")
 	private Integer code;
 	
+	@NotBlank(message = "Nombre de sucursal obligatorio")
+	@Size(min = 3, max = 150)
 	@Column(name = "nombre")
 	private String name;
 	
+	@Size(min = 5, max = 250)
 	@Column(name = "ubicacion")
 	private String address;
 	
+	@NotNull
+	@Min(10)
 	@Column(name = "cantidad_mesas")
 	private Integer numTables;
 	
+	@NotBlank(message = "Es necesario especificar el gerente de la sucursal")
+	@Size(min = 5, max = 250)
 	@Column(name = "gerente")
 	private String manager;
 	
+	@Size(max = 250)
 	@Column(name = "horarios")
 	private String schedule;
 	
