@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}">
+    <title>Perfil de Sucursal</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <h1 th:text="${store.name}" class="text-center">Nombre</h1>
+                <p><strong>Gerente:</strong> <span th:text="${{store.manager}}"></span></p>
+                <p><strong>Dirección:</strong> <span th:text="${{store.address}}"></span></p>
+                <p><strong>Mesas en establecimiento:</strong> <span th:text="${{store.numTables}}"></span></p>
+                <strong>Horario(s):</strong>
+                    <ul>
+                        <li th:each="schedule : ${store.schedulesDelegate}" th:text="${schedule}">Horario disponible</li>
+                    </ul>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-lg-10 offset-lg-1">
+                <h3>Empleados de la sucursal</h3>
+                Cantidad: <span th:text="${#lists.size(store.employees)}">Value</span>
+                <div class="table-responsive mt-1">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="table-info">
+                                <th>Empleado</th>
+                                <th>Edad</th>
+                                <th>Sexo</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="employee : ${store.employees}">
+                                <td th:text="${employee.name}">Nombre de empleado</td>
+                                <td th:text="${employee.age}">>=18</td>
+                                <td th:text="${employee.gender}">M o F</td>
+                                <td th:text="${employee.statusDelegate}" th:class="${employee.status}? text-success : text-secondary">Activo o Inactivo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
