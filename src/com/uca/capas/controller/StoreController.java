@@ -49,13 +49,14 @@ public class StoreController {
 	
 	@GetMapping("/{id}/detail")
 	String showStoreDetail(@PathVariable int id, Model model, RedirectAttributes ra) {
-		Store store = storeService.getStore(id);
+		Store store = storeService.getStoreWithEmployees(id);
 		if (store != null) {
 			model.addAttribute("store", store);
 			return "stores/show";
 		} else {
 			model.asMap().clear();
-			ra.addFlashAttribute("error", "Ocurrió un problema en la búsqueda de la sucursal. Intente más tarde.");
+			ra.addFlashAttribute("success", false);
+			ra.addFlashAttribute("message", "Ocurrió un problema en la búsqueda de la sucursal. Intente más tarde.");
 			return "redirect:/stores";
 		}
 	}
@@ -101,5 +102,26 @@ public class StoreController {
 			mav.setView(rv);
 		}
 		return mav;
+	}
+	
+	@GetMapping("/{id}/delete")
+	RedirectView delete(@PathVariable int id, RedirectAttributes ra, HttpServletRequest req) {
+		RedirectView rv = new RedirectView(req.getContextPath() + "/stores");
+		rv.setExposeModelAttributes(false);
+		Store store = storeService.getStore(id);
+		if (store == null) {
+			ra.addFlashAttribute("success", false);
+			ra.addFlashAttribute("message", "El registro que se desea eliminar no existe");
+		} else {
+			try {
+				storeService.delete(store);
+				ra.addFlashAttribute("success", true);
+				ra.addFlashAttribute("message", "Sucursal eliminada éxitosamente");
+			} catch(Exception e) {
+				ra.addFlashAttribute("success", false);
+				ra.addFlashAttribute("message", "Ocurrió un error y no se pudo borrar la sucursal");
+			}
+		}
+		return rv;
 	}
 }
