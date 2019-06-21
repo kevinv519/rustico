@@ -2,6 +2,7 @@ package com.uca.capas.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,7 +50,7 @@ public class Store {
 	@Column(name = "horarios")
 	private String schedule;
 	
-	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	List<Employee> employees;
 
 	public Store() {}
@@ -120,6 +121,12 @@ public class Store {
 
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
+	}
+	
+	public String[] getSchedulesDelegate() {
+		if (schedule == null || schedule.trim().isEmpty())
+			return new String[] {"No hay horarios disponibles"};
+		else return schedule.split(";");
 	}
 	
 }
