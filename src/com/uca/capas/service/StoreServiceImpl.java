@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.uca.capas.domain.Store;
@@ -31,6 +30,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Store store) throws DataAccessException {
 		storeRepo.delete(store);
 	}
@@ -40,5 +40,11 @@ public class StoreServiceImpl implements StoreService {
 		Optional<Store> store = storeRepo.findById(code);
 		return store.isPresent()? store.get() : null;
 	}
-	
+
+	@Override
+	@Transactional(readOnly = true)
+	public Store getStoreWithEmployees(Integer code) throws DataAccessException {
+		return storeRepo.findStoreWithEmployees(code);
+	}
+		
 }

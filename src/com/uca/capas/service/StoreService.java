@@ -11,6 +11,8 @@ public interface StoreService {
 	
 	Store getStore(Integer code) throws DataAccessException;
 	
+	Store getStoreWithEmployees(Integer code) throws DataAccessException;
+	
 	void save(Store store) throws DataAccessException;
 	
 	void delete(Store store) throws DataAccessException;
