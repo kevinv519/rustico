@@ -19,13 +19,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.uca.capas")
 public class SpringConfiguration implements WebMvcConfigurer {
-//	@Bean
-//	public ViewResolver viewResolver() {
-//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//		resolver.setPrefix("/WEB-INF/views/");
-//		resolver.setSuffix(".jsp");
-//		return resolver;
-//	}
+	private static final String ENCODING = StandardCharsets.UTF_8.name();
 
 	@Bean
 	public MappingJackson2HttpMessageConverter jsonConverter() {
@@ -46,8 +40,9 @@ public class SpringConfiguration implements WebMvcConfigurer {
 		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
 		templateResolver.setPrefix("/WEB-INF/views/");
 		templateResolver.setSuffix(".html");
+		templateResolver.setCharacterEncoding(ENCODING);
 		templateResolver.setTemplateMode(TemplateMode.HTML);
-		templateResolver.setCacheable(true);
+		templateResolver.setCacheable(false);
 		return templateResolver;
 	}
 	
@@ -63,6 +58,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
 	public ThymeleafViewResolver viewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setTemplateEngine(templateEngine());
+		viewResolver.setCharacterEncoding(ENCODING);
 		viewResolver.setOrder(1);
 		return viewResolver;
 	}
