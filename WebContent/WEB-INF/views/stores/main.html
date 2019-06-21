@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}">
+    <title>Sucursales</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div th:if="${success != null}">
+            <div class="alert" th:classappend="${success}? alert-success : alert-warning" th:text="${message}">
+                Mensaje
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-10 offset-lg-1">
+                <a th:href="@{/stores/add}" class="btn btn-success">Agregar sucursal</a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 col-lg-10 offset-lg-1">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                                <th>Gerente</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="store : ${stores}">
+                                <td th:text="${store.name}">Nombre</td>
+                                <td th:text="${store.address}">Dirección</td>
+                                <td th:text="${store.manager}">Gerente</td>
+                                <td>
+                                    <a th:href="@{/stores/{id}/detail(id=${store.code})}" class="btn btn-light">Ver perfil</a>
+                                    <a th:href="@{/stores/{id}/edit(id=${store.code})}" class="btn btn-info">Editar</a>
+                                    <a th:href="@{/stores/{id}/delete(id=${store.code})}" class="btn btn-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
