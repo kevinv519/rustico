@@ -57,6 +57,8 @@ public class Employee {
 		this.status = status;
 		this.store = store;
 	}
+	
+	public Employee() {}
 
 	public Integer getCode() {
 		return code;
