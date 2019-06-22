@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div th:if="${success != null}">
-            <div class="alert" th:classappend="${success}? alert-success : alert-warning" th:text="${message}">
-                Mensaje
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12 col-lg-10 offset-lg-1">
+                <div th:if="${success != null}">
+                    <div class="alert mb-2" th:classappend="${success}? alert-success : alert-warning" th:text="${message}">
+                        Mensaje
+                    </div>
+                </div>
                 <a th:href="@{/stores/add}" class="btn btn-success">Agregar sucursal</a>
             </div>
         </div>
@@ -37,9 +37,9 @@
                                 <td th:text="${store.address}">Dirección</td>
                                 <td th:text="${store.manager}">Gerente</td>
                                 <td>
-                                    <a th:href="@{/stores/{id}/detail(id=${store.code})}" class="btn btn-light">Ver perfil</a>
-                                    <a th:href="@{/stores/{id}/edit(id=${store.code})}" class="btn btn-info">Editar</a>
-                                    <a th:href="@{/stores/{id}/delete(id=${store.code})}" class="btn btn-danger">Eliminar</a>
+                                    <a th:href="@{/stores/detail/{id}(id=${store.code})}" class="btn btn-outline-secondary">Ver perfil</a>
+                                    <a th:href="@{/stores/edit/{id}(id=${store.code})}" class="btn btn-outline-info">Editar</a>
+                                    <a th:href="@{/stores/delete/{id}(id=${store.code})}" class="btn btn-outline-danger">Eliminar</a>
                                 </td>
                             </tr>
                         </tbody>

@@ -11,6 +11,12 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
+                <div th:if="${success != null}">
+                    <div class="alert mb-2" th:classappend="${success}? alert-success : alert-warning" th:text="${message}">
+                        Mensaje
+                    </div>
+                </div>
+                <a th:href="@{/stores}" class="btn btn-secondary">Regresar</a>
                 <h1 th:text="${store.name}" class="text-center">Nombre</h1>
                 <p><strong>Gerente:</strong> <span th:text="${{store.manager}}"></span></p>
                 <p><strong>Dirección:</strong> <span th:text="${{store.address}}"></span></p>
@@ -23,16 +29,24 @@
         </div>
         <div class="row mt-2">
             <div class="col-lg-10 offset-lg-1">
-                <h3>Empleados de la sucursal</h3>
-                Cantidad: <span th:text="${#lists.size(store.employees)}">Value</span>
-                <div class="table-responsive mt-1">
+                <div class="row">
+                    <div class="col-12 col-md-6 align-self-start">
+                        <h3>Empleados de la sucursal</h3>
+                    </div>
+                    <div class="col-12 col-md-6 align-self-end text-md-right">
+                        <a th:href="@{/employees/add}" class="btn btn-success">Agregar empleado</a>
+                    </div>
+                </div>
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered">
+                        <caption>Cantidad: <span th:text="${#lists.size(store.employees)}">Value</span></caption>
                         <thead>
                             <tr class="table-info">
                                 <th>Empleado</th>
                                 <th>Edad</th>
                                 <th>Sexo</th>
                                 <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +55,10 @@
                                 <td th:text="${employee.age}">>=18</td>
                                 <td th:text="${employee.gender}">M o F</td>
                                 <td th:text="${employee.statusDelegate}" th:class="${employee.status}? text-success : text-secondary">Activo o Inactivo</td>
+                                <td>
+                                    <a th:href="@{/employees/edit/{id}(id=${employee.code})}" class="btn btn-info">Editar</a>
+                                    <a th:href="@{/employees/delete/{id}(id=${employee.code})}" class="btn btn-danger">Eliminar</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
