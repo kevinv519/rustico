@@ -1,6 +1,7 @@
 package com.uca.capas.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,21 +48,24 @@ public class StoreController {
 		return mav;
 	}
 	
-	@GetMapping("/{id}/detail")
-	String showStoreDetail(@PathVariable int id, Model model, RedirectAttributes ra) {
+	@GetMapping("/detail/{id}")
+	ModelAndView showStoreDetail(@PathVariable int id, ModelMap map, RedirectAttributes ra) {
+		ModelAndView mav = new ModelAndView();
 		Store store = storeService.getStoreWithEmployees(id);
 		if (store != null) {
-			model.addAttribute("store", store);
-			return "stores/show";
+			mav.getModelMap().mergeAttributes(map);
+			mav.addObject("store", store);
+			mav.setViewName("stores/show");
 		} else {
-			model.asMap().clear();
+			mav.getModelMap().clear();
 			ra.addFlashAttribute("success", false);
 			ra.addFlashAttribute("message", "Ocurrió un problema en la búsqueda de la sucursal. Intente más tarde.");
-			return "redirect:/stores";
+			mav.setViewName("redirect:/stores");
 		}
+		return mav;
 	}
 	
-	@GetMapping("/{id}/edit")
+	@GetMapping("/edit/{id}")
 	ModelAndView edit(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView();
 		Store store = storeService.getStore(id);

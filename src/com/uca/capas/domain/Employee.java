@@ -100,7 +100,7 @@ public class Employee {
 		this.status = status;
 	}
 
-	public Store getStoreId() {
+	public Store getStore() {
 		return store;
 	}
 
