@@ -1,7 +1,6 @@
 package com.uca.capas.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -108,7 +107,7 @@ public class StoreController {
 		return mav;
 	}
 	
-	@GetMapping("/{id}/delete")
+	@GetMapping("/delete/{id}")
 	RedirectView delete(@PathVariable int id, RedirectAttributes ra, HttpServletRequest req) {
 		RedirectView rv = new RedirectView(req.getContextPath() + "/stores");
 		rv.setExposeModelAttributes(false);
