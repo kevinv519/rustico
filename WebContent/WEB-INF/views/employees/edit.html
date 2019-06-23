@@ -7,7 +7,7 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-4 offset-lg-4">
-                <form action="#" th:action="@{/employees/save}" th:object="${empdto}" method="POST">
+                <form action="#" th:action="@{/employees/save}" th:object="${empdto}" method="POST" autocomplete="off">
                     <div class="form-group">
                         <input type="hidden" th:field="*{code}" />
                     </div>
