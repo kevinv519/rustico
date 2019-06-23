@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div th:replace="template :: heads(pageTitle = 'Iniciar sesión')"></div>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+    <div class="container">
+        <img th:src="@{/imgs/rustico-logo-blanco.png}" class="mx-auto d-block"/>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card p-3" id="login-card">
+                    <h4 class="card-title text-center">Administración Rústico</h4>
+
+                    <form action="#" th:action="@{/login}" method="POST" autocomplete="off">
+                        <div class="form-group">
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Usuario"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña"/>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-outline-success">Iniciar sesión</button>
+                        </div>
+                    </form>
+                    <div th:if="${error != null}">
+                        <div class="alert alert-danger mt-2" th:text="${error}">
+                            Mensaje
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
