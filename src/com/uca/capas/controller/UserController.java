@@ -3,6 +3,8 @@ package com.uca.capas.controller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,18 +20,22 @@ import com.uca.capas.service.UserService;
 @Controller
 public class UserController {
 	Logger log = Logger.getLogger(UserController.class.getSimpleName());
+	public final static String ATT_LOG = "logedIn";
 	
 	@Autowired
 	UserService uService;
 	
 	@GetMapping("/")
-	String main(Model model, ModelMap map) {
+	String main(Model model, ModelMap map, HttpSession session) {
+		if (session.getAttribute(ATT_LOG) != null && (boolean)session.getAttribute(ATT_LOG)) {
+			return "redirect:/stores";
+		}
 		model.mergeAttributes(map);
 		return "login";
 	}
 	
 	@PostMapping("/login")
-	String login(@RequestParam String username, @RequestParam String password, RedirectAttributes ra) {
+	String login(@RequestParam String username, @RequestParam String password, RedirectAttributes ra, HttpSession session) {
 		if (username.trim().isEmpty() || password.trim().isEmpty()) {
 			ra.addFlashAttribute("error", "Todos los campos son obligatorios");
 		}
@@ -37,6 +43,7 @@ public class UserController {
 			try {
 				User user = uService.logInUser(username, password);
 				if (user != null) {
+					session.setAttribute(ATT_LOG, true);
 					return "redirect:/stores";
 				}
 				ra.addFlashAttribute("error", "Usuario o contraseña inválidos");
@@ -45,6 +52,12 @@ public class UserController {
 				ra.addFlashAttribute("error", "No se pudo autenticar el usuario. Intenté más tarde o contacte el administrador del sitio");
 			}
 		}
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	String logout(HttpSession session) {
+		session.setAttribute(ATT_LOG, false);
 		return "redirect:/";
 	}
 }
