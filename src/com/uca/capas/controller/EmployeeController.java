@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -40,16 +41,18 @@ public class EmployeeController {
 	String edit(@PathVariable int id, Model model) {
 		EmployeeDTO emp = empService.getEmployee(id);
 		if (emp == null) {
-			return "redirect:/javascript:history.back()";
+			return "redirect:/stores/detail/" + id ;
 		} else {
 			model.addAttribute("empdto", emp);
 			return "employees/edit";
 		}
 	}
 	
-	@GetMapping("/add")
-	String add(Model model) {
-		model.addAttribute("empdto", new EmployeeDTO());
+	@PostMapping("/add")
+	String add(@RequestParam int storeId, Model model) {
+		EmployeeDTO empdto = new EmployeeDTO();
+		empdto.setStoreId(storeId);
+		model.addAttribute("empdto", empdto);
 		return "employees/edit";
 	}
 	
