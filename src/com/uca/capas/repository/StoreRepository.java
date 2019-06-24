@@ -7,6 +7,6 @@ import com.uca.capas.domain.Store;
 
 public interface StoreRepository extends JpaRepository<Store, Integer> {
 
-	@Query("SELECT s FROM Store s JOIN FETCH s.employees WHERE s.code = ?1")
+	@Query("SELECT s FROM Store s LEFT JOIN FETCH s.employees WHERE s.code = ?1")
 	Store findStoreWithEmployees(Integer code);
 }
